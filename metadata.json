@@ -1,0 +1,7 @@
+{
+  "name": "Voice to Tasks",
+  "description": "An intelligent task manager that captures tasks via voice, transcribes them, and uses AI to automatically extract details like due dates, priority, and tags.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
