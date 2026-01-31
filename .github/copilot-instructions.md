@@ -78,37 +78,46 @@ Voice-Tasks is a React+TypeScript voice-to-productivity app that converts spoken
 
 ## Build & Environment
 
+**Project Type**: AI Studio app with CDN imports (not a traditional Vite build)
+
+- Uses `<script type="importmap">` in [index.html](index.html) to load React and dependencies from CDN
+- No build step needed for production - files deploy directly to GitHub Pages
+- Vite config is for local dev server only
+
 **Commands**:
 
 ```bash
-npm install      # Install dependencies
+npm install      # Install dependencies (local dev only)
 npm run dev      # Start Vite dev server (port 3000)
-npm run build    # Production build
-npm run preview  # Preview built app
 ```
 
 **Environment Variables** (.env.local):
 
-- `VITE_GEMINI_API_KEY`: Required for Gemini API calls
+- `VITE_GEMINI_API_KEY`: Required for Gemini API calls (used in local dev with Vite)
 - Vite loads via `import.meta.env`
+- **For GitHub Pages**: Set `VITE_GEMINI_API_KEY` as a repository secret (currently unused in production since CDN loads the API key directly in services)
 
-**Build Config**: [vite.config.ts](vite.config.ts)
+**App Initialization**:
 
-- React plugin enabled
-- Define globals for API_KEY and GEMINI_API_KEY
-- Alias `@` → root directory (currently unused)
-- **base**: `/Voice-Tasks/` for GitHub Pages subdirectory deployment
+- Entry point: [index.tsx](index.tsx) - React root mounted to `#root` div
+- Main component: [App.tsx](App.tsx) - handles all UI and state
 
 ## Deployment
 
 **GitHub Pages Setup**:
 
 - Workflow: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) (auto-triggered on push to main)
-- **Required secret**: `VITE_GEMINI_API_KEY` (set in repo settings)
-- Builds to `dist/` and deploys to GitHub Pages
+- Deploys source files directly (no build step)
+- Script path: Updated in [index.html](index.html) to `/Voice-Tasks/index.tsx` for subdirectory deployment
 - URL: `https://sdokania30.github.io/Voice-Tasks/`
 
-To deploy: Push to `main` branch. GitHub Actions will automatically build and deploy.
+**To deploy**: Push to `main` branch. GitHub Actions will automatically deploy raw files to GitHub Pages.
+
+**Important**: After deployment, verify that CDN imports work by checking browser network tab for:
+
+- `https://aistudiocdn.com/react@^19.2.0`
+- `https://aistudiocdn.com/@google/genai@^1.28.0`
+- `https://esm.sh/@emailjs/browser@4.4.1`
 
 ## Common Tasks & Code Examples
 
