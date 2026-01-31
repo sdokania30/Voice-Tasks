@@ -102,6 +102,7 @@ npm run preview  # Preview built app
 ## Deployment
 
 **GitHub Pages Setup**:
+
 - Workflow: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) (auto-triggered on push to main)
 - **Required secret**: `VITE_GEMINI_API_KEY` (set in repo settings)
 - Builds to `dist/` and deploys to GitHub Pages
